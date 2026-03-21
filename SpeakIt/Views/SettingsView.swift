@@ -108,7 +108,9 @@ struct SettingsView: View {
            let voice = AVSpeechSynthesisVoice(identifier: identifier) {
             return voice
         }
-        return AVSpeechSynthesisVoice(language: "en-US") ?? AVSpeechSynthesisVoice()
+        return SpeechSettings.preferredDefaultEnglishVoice()
+            ?? AVSpeechSynthesisVoice(language: "en-US")
+            ?? AVSpeechSynthesisVoice()
     }
 
     private var draftHotkeyDisplayString: String {

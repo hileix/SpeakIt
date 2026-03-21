@@ -133,7 +133,9 @@ class SpeechSettings: ObservableObject {
            let voice = AVSpeechSynthesisVoice(identifier: identifier) {
             return voice
         }
-        return AVSpeechSynthesisVoice(language: "en-US") ?? AVSpeechSynthesisVoice()
+        return SpeechSettings.preferredDefaultEnglishVoice()
+            ?? AVSpeechSynthesisVoice(language: "en-US")
+            ?? AVSpeechSynthesisVoice()
     }
 
     /// Reset all settings to defaults
@@ -167,12 +169,7 @@ class SpeechSettings: ObservableObject {
     func englishVoices() -> [AVSpeechSynthesisVoice] {
         SpeechSettings.allVoices()
             .filter { $0.language.lowercased().hasPrefix("en") }
-            .sorted {
-                if $0.language == $1.language {
-                    return $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
-                }
-                return $0.language.localizedCaseInsensitiveCompare($1.language) == .orderedAscending
-            }
+            .sorted(by: SpeechSettings.isPreferredVoice(_:over:))
     }
 
     var hotkeyModifiers: HotkeyModifier {
@@ -232,6 +229,57 @@ class SpeechSettings: ObservableObject {
         "I": 34, "P": 35, "L": 37, "J": 38, "'": 39, "K": 40, ";": 41, "\\": 42,
         ",": 43, "/": 44, "N": 45, "M": 46, ".": 47
     ]
+
+    static func preferredDefaultEnglishVoice() -> AVSpeechSynthesisVoice? {
+        englishVoicesSorted().first
+    }
+
+    private static func englishVoicesSorted() -> [AVSpeechSynthesisVoice] {
+        allVoices()
+            .filter { $0.language.lowercased().hasPrefix("en") }
+            .sorted(by: isPreferredVoice(_:over:))
+    }
+
+    private static func isPreferredVoice(_ lhs: AVSpeechSynthesisVoice, over rhs: AVSpeechSynthesisVoice) -> Bool {
+        let lhsScore = voicePreferenceScore(lhs)
+        let rhsScore = voicePreferenceScore(rhs)
+        if lhsScore != rhsScore {
+            return lhsScore > rhsScore
+        }
+
+        if lhs.language != rhs.language {
+            return lhs.language.localizedCaseInsensitiveCompare(rhs.language) == .orderedAscending
+        }
+
+        return lhs.name.localizedCaseInsensitiveCompare(rhs.name) == .orderedAscending
+    }
+
+    private static func voicePreferenceScore(_ voice: AVSpeechSynthesisVoice) -> Int {
+        var score = 0
+
+        switch voice.quality {
+        case .premium:
+            score += 300
+        case .enhanced:
+            score += 200
+        default:
+            break
+        }
+
+        let language = voice.language.lowercased()
+        if language == "en-us" {
+            score += 100
+        } else if language.hasPrefix("en") {
+            score += 50
+        }
+
+        let name = voice.name.lowercased()
+        if name.contains("siri") {
+            score += 20
+        }
+
+        return score
+    }
 }
 
 // MARK: - Codable Support for Serialization
