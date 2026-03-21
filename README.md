@@ -2,8 +2,7 @@
 
 SpeakIt is a SwiftUI text-to-speech app built on top of AVFoundation.
 
-- On macOS, it runs as a menu bar app and reads the current selection with a global hotkey.
-- On iOS, it provides a simple text input screen for manual playback.
+It runs as a macOS menu bar app and reads the current selection with a global hotkey.
 
 ## Current Features
 
@@ -14,8 +13,6 @@ SpeakIt is a SwiftUI text-to-speech app built on top of AVFoundation.
 - Settings UI in English and Chinese
 - Explicit save flow in settings
 - Speech history stored with Core Data
-- Manual text entry and playback on iOS
-- Pause, resume, and stop controls during playback on iOS
 
 ## macOS Flow
 
