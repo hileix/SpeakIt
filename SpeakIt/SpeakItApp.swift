@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 @main
 struct SpeakItApp: App {
@@ -18,9 +17,16 @@ struct SpeakItApp: App {
 
     var body: some Scene {
         #if os(macOS)
-        // macOS: Menu bar app with global hotkey support
-        Settings {
-            EmptyView()
+        MenuBarExtra("SpeakIt", systemImage: "speaker.wave.2.fill") {
+            Button("Settings") {
+                appDelegate.openSettingsFromMenuBar()
+            }
+
+            Divider()
+
+            Button("Exit") {
+                appDelegate.quitFromMenuBar()
+            }
         }
         #else
         // iOS: Standard window-based app
@@ -35,10 +41,7 @@ struct SpeakItApp: App {
 #if os(macOS)
 /// App delegate for handling macOS-specific functionality
 class AppDelegate: NSObject, NSApplicationDelegate {
-    private var statusItem: NSStatusItem?
     private var settingsWindow: NSWindow?
-    private var hotkeyMenuItem: NSMenuItem?
-    private var cancellables = Set<AnyCancellable>()
 
     private let hotkeyService = GlobalHotkeyService.shared
     private let clipboardMonitor = ClipboardMonitor.shared
@@ -48,7 +51,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         print("🚀 SpeakIt applicationDidFinishLaunching")
-        setupMenuBar()
         observeSettings()
         setupHotkeyHandler()
         checkAccessibilityPermissions()
@@ -58,41 +60,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         print("✅ SpeakIt started. Press \(settings.hotkeyDisplayString) to speak selected text.")
-    }
-
-    /// Setup menu bar icon and menu
-    private func setupMenuBar() {
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-
-        if let button = statusItem?.button {
-            button.image = NSImage(systemSymbolName: "speaker.wave.2.fill", accessibilityDescription: "SpeakIt")
-            button.action = #selector(statusItemClicked)
-            button.target = self
-        }
-
-        let menu = NSMenu()
-
-        menu.addItem(NSMenuItem(title: "SpeakIt", action: nil, keyEquivalent: ""))
-        menu.addItem(NSMenuItem.separator())
-
-        menu.addItem(NSMenuItem(title: "Speak Clipboard", action: #selector(speakClipboard), keyEquivalent: "c"))
-
-        menu.addItem(NSMenuItem.separator())
-
-        menu.addItem(NSMenuItem(title: "Settings...", action: #selector(openSettings), keyEquivalent: ","))
-
-        menu.addItem(NSMenuItem.separator())
-
-        let hotkeyItem = NSMenuItem(title: hotkeyMenuItemTitle, action: nil, keyEquivalent: "")
-        hotkeyItem.isEnabled = false
-        menu.addItem(hotkeyItem)
-        hotkeyMenuItem = hotkeyItem
-
-        menu.addItem(NSMenuItem.separator())
-
-        menu.addItem(NSMenuItem(title: "Quit SpeakIt", action: #selector(quitApp), keyEquivalent: "q"))
-
-        statusItem?.menu = menu
     }
 
     /// Setup global hotkey handler
@@ -135,16 +102,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// Speak current clipboard content
-    @objc private func speakClipboard() {
-        if let text = clipboardMonitor.readClipboardText(), !text.isEmpty {
-            ttsService.speak(text: text, settings: settings)
-            saveSpeechHistory(text: text, source: "manual")
-        } else {
-            showAlert(title: "No Text", message: "Clipboard is empty or doesn't contain text.")
-        }
-    }
-
     /// Open settings window
     @objc private func openSettings() {
         if settingsWindow == nil {
@@ -169,11 +126,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.activate(ignoringOtherApps: true)
     }
 
-    /// Menu bar icon clicked
-    @objc private func statusItemClicked() {
-        // Menu will show automatically
-    }
-
     /// Quit application
     @objc private func quitApp() {
         NSApplication.shared.terminate(nil)
@@ -189,39 +141,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         )
     }
 
-    /// Show alert dialog
-    private func showAlert(title: String, message: String) {
-        let alert = NSAlert()
-        alert.messageText = title
-        alert.informativeText = message
-        alert.alertStyle = .informational
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
+    private func observeSettings() {}
+
+    func openSettingsFromMenuBar() {
+        openSettings()
     }
 
-    private var hotkeyMenuItemTitle: String {
-        let shortcut = settings.supportsGlobalHotkey ? settings.hotkeyDisplayString : "Invalid"
-        return "Hotkey: \(shortcut)"
-    }
-
-    private func observeSettings() {
-        settings.$hotkeyKey
-            .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.updateHotkeyMenuItem()
-            }
-            .store(in: &cancellables)
-
-        settings.$hotkeyModifiersRawValue
-            .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.updateHotkeyMenuItem()
-            }
-            .store(in: &cancellables)
-    }
-
-    private func updateHotkeyMenuItem() {
-        hotkeyMenuItem?.title = hotkeyMenuItemTitle
+    func quitFromMenuBar() {
+        quitApp()
     }
 }
 #endif

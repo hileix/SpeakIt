@@ -43,6 +43,16 @@ class TTSService: NSObject, ObservableObject {
     ///   - text: The text to speak
     ///   - settings: Speech settings (voice, rate, pitch)
     func speak(text: String, settings: SpeechSettings = SpeechSettings.shared) {
+        speak(
+            text: text,
+            voiceIdentifier: settings.voiceIdentifier,
+            fallbackVoice: settings.currentVoice,
+            rate: settings.rate,
+            pitch: settings.pitch
+        )
+    }
+
+    func speak(text: String, voiceIdentifier: String?, fallbackVoice: AVSpeechSynthesisVoice, rate: Float, pitch: Float) {
         guard !text.isEmpty else {
             print("❌ TTSService.speak: Text is empty")
             return
@@ -59,20 +69,19 @@ class TTSService: NSObject, ObservableObject {
         let utterance = AVSpeechUtterance(string: text)
 
         // Apply settings
-        if let voiceIdentifier = settings.voiceIdentifier,
+        if let voiceIdentifier = voiceIdentifier,
            let voice = AVSpeechSynthesisVoice(identifier: voiceIdentifier) {
             utterance.voice = voice
             print("🗣️ Using voice: \(voice.name)")
         } else {
-            // Default to system voice
-            utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
-            print("🗣️ Using default en-US voice")
+            utterance.voice = fallbackVoice
+            print("🗣️ Using default English voice")
         }
 
-        utterance.rate = settings.rate
-        utterance.pitchMultiplier = settings.pitch
+        utterance.rate = rate
+        utterance.pitchMultiplier = pitch
 
-        print("⚙️ Rate: \(settings.rate), Pitch: \(settings.pitch)")
+        print("⚙️ Rate: \(rate), Pitch: \(pitch)")
 
         currentText = text
 

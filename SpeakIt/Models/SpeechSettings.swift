@@ -12,6 +12,22 @@ import AVFoundation
 class SpeechSettings: ObservableObject {
     static let shared = SpeechSettings()
 
+    enum LanguageOption: String, CaseIterable, Identifiable {
+        case english = "en-US"
+        case chinese = "zh-CN"
+
+        var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .english:
+                return "English"
+            case .chinese:
+                return "Chinese"
+            }
+        }
+    }
+
     struct HotkeyModifier: OptionSet {
         let rawValue: Int
 
@@ -32,7 +48,7 @@ class SpeechSettings: ObservableObject {
         static let voiceIdentifier = "voiceIdentifier"
         static let rate = "rate"
         static let pitch = "pitch"
-        static let autoSpeakClipboard = "autoSpeakClipboard"
+        static let language = "language"
         static let hotkeyKey = "hotkeyKey"
         static let hotkeyModifiers = "hotkeyModifiers"
     }
@@ -57,9 +73,15 @@ class SpeechSettings: ObservableObject {
         }
     }
 
-    @Published var autoSpeakClipboard: Bool {
+    @Published var languageRawValue: String {
         didSet {
-            defaults.set(autoSpeakClipboard, forKey: Keys.autoSpeakClipboard)
+            let normalized = LanguageOption(rawValue: languageRawValue)?.rawValue ?? LanguageOption.english.rawValue
+            if languageRawValue != normalized {
+                languageRawValue = normalized
+                return
+            }
+
+            defaults.set(languageRawValue, forKey: Keys.language)
         }
     }
 
@@ -96,7 +118,7 @@ class SpeechSettings: ObservableObject {
         self.voiceIdentifier = defaults.string(forKey: Keys.voiceIdentifier)
         self.rate = defaults.object(forKey: Keys.rate) as? Float ?? AVSpeechUtteranceDefaultSpeechRate
         self.pitch = defaults.object(forKey: Keys.pitch) as? Float ?? 1.0
-        self.autoSpeakClipboard = defaults.bool(forKey: Keys.autoSpeakClipboard)
+        self.languageRawValue = LanguageOption(rawValue: defaults.string(forKey: Keys.language) ?? "")?.rawValue ?? LanguageOption.english.rawValue
         self.hotkeyKey = SpeechSettings.normalizedHotkeyKey(from: defaults.string(forKey: Keys.hotkeyKey) ?? "S")
 
         let storedModifiers = defaults.object(forKey: Keys.hotkeyModifiers) as? Int
@@ -119,7 +141,7 @@ class SpeechSettings: ObservableObject {
         voiceIdentifier = nil
         rate = AVSpeechUtteranceDefaultSpeechRate
         pitch = 1.0
-        autoSpeakClipboard = false
+        language = .english
         hotkeyKey = "S"
         hotkeyModifiers = .default
     }
@@ -135,6 +157,22 @@ class SpeechSettings: ObservableObject {
     /// Get all available voices as a flat array
     static func allVoices() -> [AVSpeechSynthesisVoice] {
         return AVSpeechSynthesisVoice.speechVoices()
+    }
+
+    var language: LanguageOption {
+        get { LanguageOption(rawValue: languageRawValue) ?? .english }
+        set { languageRawValue = newValue.rawValue }
+    }
+
+    func englishVoices() -> [AVSpeechSynthesisVoice] {
+        SpeechSettings.allVoices()
+            .filter { $0.language.lowercased().hasPrefix("en") }
+            .sorted {
+                if $0.language == $1.language {
+                    return $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+                }
+                return $0.language.localizedCaseInsensitiveCompare($1.language) == .orderedAscending
+            }
     }
 
     var hotkeyModifiers: HotkeyModifier {
@@ -198,11 +236,11 @@ class SpeechSettings: ObservableObject {
 
 // MARK: - Codable Support for Serialization
 extension SpeechSettings {
-    struct CodableSettings: Codable {
+    struct CodableSettings: Codable, Equatable {
         let voiceIdentifier: String?
         let rate: Float
         let pitch: Float
-        let autoSpeakClipboard: Bool
+        let language: String
         let hotkeyKey: String
         let hotkeyModifiers: Int
     }
@@ -212,7 +250,7 @@ extension SpeechSettings {
             voiceIdentifier: voiceIdentifier,
             rate: rate,
             pitch: pitch,
-            autoSpeakClipboard: autoSpeakClipboard,
+            language: language.rawValue,
             hotkeyKey: hotkeyKey,
             hotkeyModifiers: hotkeyModifiers.rawValue
         )
@@ -222,7 +260,7 @@ extension SpeechSettings {
         voiceIdentifier = codable.voiceIdentifier
         rate = codable.rate
         pitch = codable.pitch
-        autoSpeakClipboard = codable.autoSpeakClipboard
+        language = LanguageOption(rawValue: codable.language) ?? .english
         hotkeyKey = codable.hotkeyKey
         hotkeyModifiers = HotkeyModifier(rawValue: codable.hotkeyModifiers)
     }
