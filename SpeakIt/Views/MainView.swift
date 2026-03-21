@@ -28,10 +28,27 @@ struct MainView: View {
         NavigationView {
             VStack(spacing: 20) {
                 // Header
-                Text("SpeakIt")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.top)
+                HStack(spacing: 14) {
+                    Image("AppLogo")
+                        .resizable()
+                        .interpolation(.high)
+                        .frame(width: 52, height: 52)
+                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("SpeakIt")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+
+                        Text("Read selected text out loud")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+                }
+                .padding(.horizontal)
+                .padding(.top)
 
                 // Text Input Area
                 VStack(alignment: .leading, spacing: 8) {
