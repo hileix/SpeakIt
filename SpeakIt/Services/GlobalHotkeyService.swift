@@ -8,6 +8,7 @@
 import Foundation
 import AppKit
 import Carbon
+import Combine
 
 /// Service for registering and handling global hotkeys (system-wide keyboard shortcuts)
 class GlobalHotkeyService: ObservableObject {
@@ -15,14 +16,12 @@ class GlobalHotkeyService: ObservableObject {
 
     private var eventHandler: EventHandlerRef?
     private var hotKeyRef: EventHotKeyRef?
-
-    // Hotkey configuration (Ctrl+S by default)
-    private let hotkeyKeyCode: UInt32 = 1 // 'S' key code
-    private let hotkeyModifiers: UInt32 = UInt32(controlKey) // Ctrl key
+    private var cancellables = Set<AnyCancellable>()
 
     var onHotkeyTriggered: (() -> Void)?
 
     private init() {
+        observeSettings()
         setupGlobalHotkey()
     }
 
@@ -39,38 +38,49 @@ class GlobalHotkeyService: ObservableObject {
             return
         }
 
+        guard let keyCode = SpeechSettings.keyCode(for: SpeechSettings.shared.hotkeyKey) else {
+            print("Invalid hotkey key: \(SpeechSettings.shared.hotkeyKey)")
+            return
+        }
+
+        let modifiers = carbonModifiers(from: SpeechSettings.shared.hotkeyModifiers)
+        guard modifiers != 0 else {
+            print("Hotkey modifiers must not be empty.")
+            return
+        }
+
         var eventSpec = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: UInt32(kEventHotKeyPressed))
 
         // Install event handler
-        InstallEventHandler(GetApplicationEventTarget(), { (nextHandler, theEvent, userData) -> OSStatus in
-            guard let userData = userData else { return OSStatus(eventNotHandledErr) }
+        if eventHandler == nil {
+            InstallEventHandler(GetApplicationEventTarget(), { (_, _, userData) -> OSStatus in
+                guard let userData = userData else { return OSStatus(eventNotHandledErr) }
 
-            let service = Unmanaged<GlobalHotkeyService>.fromOpaque(userData).takeUnretainedValue()
-            service.handleHotkeyPress()
+                let service = Unmanaged<GlobalHotkeyService>.fromOpaque(userData).takeUnretainedValue()
+                service.handleHotkeyPress()
 
-            return noErr
-        }, 1, &eventSpec, Unmanaged.passUnretained(self).toOpaque(), &eventHandler)
+                return noErr
+            }, 1, &eventSpec, Unmanaged.passUnretained(self).toOpaque(), &eventHandler)
+        }
 
         // Register the hotkey
         let hotKeyID = EventHotKeyID(signature: OSType(0x48544B59), id: 1) // 'HTKY' signature
-        RegisterEventHotKey(hotkeyKeyCode, hotkeyModifiers, hotKeyID, GetApplicationEventTarget(), 0, &hotKeyRef)
+        RegisterEventHotKey(keyCode, modifiers, hotKeyID, GetApplicationEventTarget(), 0, &hotKeyRef)
 
-        print("Global hotkey registered: Ctrl+S")
+        print("Global hotkey registered: \(SpeechSettings.shared.hotkeyDisplayString)")
     }
 
     /// Unregister the global hotkey
     private func unregisterHotkey() {
         if let hotKeyRef = hotKeyRef {
             UnregisterEventHotKey(hotKeyRef)
-        }
-        if let eventHandler = eventHandler {
-            RemoveEventHandler(eventHandler)
+            self.hotKeyRef = nil
         }
     }
 
     /// Handle hotkey press event
     private func handleHotkeyPress() {
-        print("Global hotkey triggered: Ctrl+S")
+        print("Global hotkey triggered: \(SpeechSettings.shared.hotkeyDisplayString)")
 
         // Trigger the callback
         DispatchQueue.main.async {
@@ -108,6 +118,11 @@ class GlobalHotkeyService: ObservableObject {
         return AXIsProcessTrusted()
     }
 
+    func refreshRegistration() {
+        unregisterHotkey()
+        setupGlobalHotkey()
+    }
+
     /// Simulate Cmd+C to copy selected text
     func copySelectedText() {
         guard hasAccessibilityPermissions() else {
@@ -141,5 +156,42 @@ class GlobalHotkeyService: ObservableObject {
         cmdUp?.post(tap: location)
 
         print("Simulated Cmd+C to copy selected text")
+    }
+
+    private func observeSettings() {
+        let settings = SpeechSettings.shared
+
+        settings.$hotkeyKey
+            .dropFirst()
+            .sink { [weak self] _ in
+                self?.refreshRegistration()
+            }
+            .store(in: &cancellables)
+
+        settings.$hotkeyModifiersRawValue
+            .dropFirst()
+            .sink { [weak self] _ in
+                self?.refreshRegistration()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func carbonModifiers(from modifiers: SpeechSettings.HotkeyModifier) -> UInt32 {
+        var carbonValue: UInt32 = 0
+
+        if modifiers.contains(.control) {
+            carbonValue |= UInt32(controlKey)
+        }
+        if modifiers.contains(.option) {
+            carbonValue |= UInt32(optionKey)
+        }
+        if modifiers.contains(.command) {
+            carbonValue |= UInt32(cmdKey)
+        }
+        if modifiers.contains(.shift) {
+            carbonValue |= UInt32(shiftKey)
+        }
+
+        return carbonValue
     }
 }

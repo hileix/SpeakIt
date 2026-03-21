@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 @main
 struct SpeakItApp: App {
@@ -36,6 +37,8 @@ struct SpeakItApp: App {
 class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem?
     private var settingsWindow: NSWindow?
+    private var hotkeyMenuItem: NSMenuItem?
+    private var cancellables = Set<AnyCancellable>()
 
     private let hotkeyService = GlobalHotkeyService.shared
     private let clipboardMonitor = ClipboardMonitor.shared
@@ -46,10 +49,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         print("🚀 SpeakIt applicationDidFinishLaunching")
         setupMenuBar()
+        observeSettings()
         setupHotkeyHandler()
         checkAccessibilityPermissions()
 
-        print("✅ SpeakIt started. Press Ctrl+S to speak selected text.")
+        DispatchQueue.main.async {
+            self.openSettings()
+        }
+
+        print("✅ SpeakIt started. Press \(settings.hotkeyDisplayString) to speak selected text.")
     }
 
     /// Setup menu bar icon and menu
@@ -75,9 +83,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         menu.addItem(NSMenuItem.separator())
 
-        let hotkeyItem = NSMenuItem(title: "Hotkey: Ctrl+S", action: nil, keyEquivalent: "")
+        let hotkeyItem = NSMenuItem(title: hotkeyMenuItemTitle, action: nil, keyEquivalent: "")
         hotkeyItem.isEnabled = false
         menu.addItem(hotkeyItem)
+        hotkeyMenuItem = hotkeyItem
 
         menu.addItem(NSMenuItem.separator())
 
@@ -102,9 +111,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// Handle global hotkey press (Ctrl+S)
+    /// Handle global hotkey press
     @objc private func handleGlobalHotkey() {
-        print("Ctrl+S pressed - capturing selected text")
+        print("\(settings.hotkeyDisplayString) pressed - capturing selected text")
 
         // Step 1: Simulate Cmd+C to copy selected text
         hotkeyService.copySelectedText()
@@ -139,8 +148,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Open settings window
     @objc private func openSettings() {
         if settingsWindow == nil {
-            let settingsView = SettingsView()
+            let settingsView = SettingsView(onDone: { [weak self] in
+                self?.settingsWindow?.close()
+            })
                 .frame(width: 500, height: 600)
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
 
             let hostingController = NSHostingController(rootView: settingsView)
             let window = NSWindow(contentViewController: hostingController)
@@ -148,6 +160,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             window.styleMask = [.titled, .closable, .resizable]
             window.setContentSize(NSSize(width: 500, height: 600))
             window.center()
+            window.isReleasedWhenClosed = false
 
             settingsWindow = window
         }
@@ -184,6 +197,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         alert.alertStyle = .informational
         alert.addButton(withTitle: "OK")
         alert.runModal()
+    }
+
+    private var hotkeyMenuItemTitle: String {
+        let shortcut = settings.supportsGlobalHotkey ? settings.hotkeyDisplayString : "Invalid"
+        return "Hotkey: \(shortcut)"
+    }
+
+    private func observeSettings() {
+        settings.$hotkeyKey
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.updateHotkeyMenuItem()
+            }
+            .store(in: &cancellables)
+
+        settings.$hotkeyModifiersRawValue
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.updateHotkeyMenuItem()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func updateHotkeyMenuItem() {
+        hotkeyMenuItem?.title = hotkeyMenuItemTitle
     }
 }
 #endif
