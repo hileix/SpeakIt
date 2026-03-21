@@ -76,6 +76,27 @@ Open `SpeakIt.xcodeproj` in Xcode and run the `SpeakIt` scheme.
 
 If Xcode reports a signing error, update the team and signing certificate in the project settings before building.
 
+## DMG Packaging
+
+To build a distributable macOS app bundle and package it into a DMG:
+
+```bash
+bash Scripts/package_dmg.sh --clean
+```
+
+By default the script uses `xcodebuild archive`, copies the archived `SpeakIt.app` into `dist/`, and creates `dist/SpeakIt.dmg`.
+The generated DMG includes a standard drag-to-install layout with `SpeakIt.app` and an `Applications` shortcut.
+
+Useful variants:
+
+```bash
+bash Scripts/package_dmg.sh --mode build
+bash Scripts/package_dmg.sh --configuration Debug --build-dir out
+```
+
+If signing is not configured correctly in Xcode, the script will fail during the `xcodebuild` step.
+If Finder automation is blocked by system permissions, the script still creates a usable drag-install DMG, but the icon layout may fall back to the default arrangement.
+
 ## License
 
 This project is licensed under the MIT License. See `LICENSE` for details.
