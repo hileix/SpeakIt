@@ -1,8 +1,8 @@
 //
 //  GlobalHotkeyService.swift
-//  SpeakIt
+//  AuralAI
 //
-//  Created by SpeakIt Migration
+//  Created by AuralAI Migration
 //
 
 import Foundation
@@ -100,7 +100,7 @@ class GlobalHotkeyService: ObservableObject {
             DispatchQueue.main.async {
                 let alert = NSAlert()
                 alert.messageText = "Accessibility Permission Required"
-                alert.informativeText = "SpeakIt needs accessibility permission to monitor global keyboard shortcuts. Please grant permission in System Preferences > Security & Privacy > Privacy > Accessibility."
+                alert.informativeText = "AuralAI needs accessibility permission to monitor global keyboard shortcuts. Please grant permission in System Preferences > Security & Privacy > Privacy > Accessibility."
                 alert.alertStyle = .warning
                 alert.addButton(withTitle: "Open System Preferences")
                 alert.addButton(withTitle: "Later")

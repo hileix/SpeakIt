@@ -5,7 +5,7 @@
     <key>LSUIElement</key>
     <true/>
     <key>NSAppleEventsUsageDescription</key>
-    <string>SpeakIt needs permission to simulate keyboard events to copy selected text from other applications.</string>
+    <string>AuralAI needs permission to simulate keyboard events to copy selected text from other applications.</string>
     <key>NSAppleScriptEnabled</key>
     <true/>
 </dict>

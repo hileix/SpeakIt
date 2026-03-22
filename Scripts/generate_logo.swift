@@ -7,8 +7,8 @@ struct OutputImage {
 
 let fileManager = FileManager.default
 let rootURL = URL(fileURLWithPath: fileManager.currentDirectoryPath)
-let appIconURL = rootURL.appendingPathComponent("SpeakIt/Assets.xcassets/AppIcon.appiconset", isDirectory: true)
-let appLogoURL = rootURL.appendingPathComponent("SpeakIt/Assets.xcassets/AppLogo.imageset", isDirectory: true)
+let appIconURL = rootURL.appendingPathComponent("AuralAI/Assets.xcassets/AppIcon.appiconset", isDirectory: true)
+let appLogoURL = rootURL.appendingPathComponent("AuralAI/Assets.xcassets/AppLogo.imageset", isDirectory: true)
 
 let appIcons: [OutputImage] = [
     .init(filename: "icon_16x16.png", size: 16),

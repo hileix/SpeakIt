@@ -1,6 +1,6 @@
 //
-//  SpeakItApp.swift
-//  SpeakIt
+//  AuralAIApp.swift
+//  AuralAI
 //
 //  Created by mac on 2026/3/21.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct SpeakItApp: App {
+struct AuralAIApp: App {
     let persistenceController = PersistenceController.shared
 
     #if os(macOS)
@@ -17,7 +17,7 @@ struct SpeakItApp: App {
 
     var body: some Scene {
         #if os(macOS)
-        MenuBarExtra("SpeakIt", systemImage: "speaker.wave.2.fill") {
+        MenuBarExtra("AuralAI", systemImage: "speaker.wave.2.fill") {
             Button("Settings") {
                 appDelegate.openSettingsFromMenuBar()
             }
@@ -50,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let persistenceController = PersistenceController.shared
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        print("🚀 SpeakIt applicationDidFinishLaunching")
+        print("🚀 AuralAI applicationDidFinishLaunching")
         observeSettings()
         setupHotkeyHandler()
         checkAccessibilityPermissions()
@@ -59,7 +59,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.openSettings()
         }
 
-        print("✅ SpeakIt started. Press \(settings.hotkeyDisplayString) to speak selected text.")
+        print("✅ AuralAI started. Press \(settings.hotkeyDisplayString) to speak selected text.")
     }
 
     /// Setup global hotkey handler
@@ -113,7 +113,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             let hostingController = NSHostingController(rootView: settingsView)
             let window = NSWindow(contentViewController: hostingController)
-            window.title = "SpeakIt Settings"
+            window.title = "AuralAI Settings"
             window.styleMask = [.titled, .closable, .resizable]
             window.setContentSize(NSSize(width: 500, height: 600))
             window.center()

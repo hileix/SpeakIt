@@ -1,6 +1,6 @@
 //
 //  Persistence.swift
-//  SpeakIt
+//  AuralAI
 //
 //  Created by mac on 2026/3/21.
 //
@@ -36,7 +36,7 @@ struct PersistenceController {
     let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "SpeakIt")
+        container = NSPersistentContainer(name: "AuralAI")
         guard let description = container.persistentStoreDescriptions.first else {
             fatalError("Missing persistent store description")
         }
@@ -106,7 +106,7 @@ struct PersistenceController {
 
     private static func defaultStoreURL() -> URL {
         let fileManager = FileManager.default
-        let bundleIdentifier = Bundle.main.bundleIdentifier ?? "com.xiaolei.SpeakIt"
+        let bundleIdentifier = Bundle.main.bundleIdentifier ?? "com.xiaolei.AuralAI"
 
         guard let appSupportURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
             fatalError("Could not resolve Application Support directory")
@@ -120,6 +120,6 @@ struct PersistenceController {
             fatalError("Could not create persistent store directory: \(error)")
         }
 
-        return directoryURL.appendingPathComponent("SpeakIt.sqlite")
+        return directoryURL.appendingPathComponent("AuralAI.sqlite")
     }
 }

@@ -1,8 +1,8 @@
 //
 //  TTSService.swift
-//  SpeakIt
+//  AuralAI
 //
-//  Created by SpeakIt Migration
+//  Created by AuralAI Migration
 //
 
 import Foundation

@@ -1,6 +1,6 @@
-# SpeakIt
+# AuralAI
 
-SpeakIt is a SwiftUI text-to-speech app built on top of AVFoundation.
+AuralAI is a SwiftUI text-to-speech app built on top of AVFoundation.
 
 It runs as a macOS menu bar app and reads the current selection with a global hotkey.
 
@@ -16,7 +16,7 @@ It runs as a macOS menu bar app and reads the current selection with a global ho
 
 ## macOS Flow
 
-SpeakIt on macOS is a `MenuBarExtra` app.
+AuralAI on macOS is a `MenuBarExtra` app.
 
 1. Launch the app.
 2. Open `Settings` from the menu bar.
@@ -25,7 +25,7 @@ SpeakIt on macOS is a `MenuBarExtra` app.
 5. Select text in any app.
 6. Press the configured hotkey.
 
-When the hotkey is pressed, SpeakIt simulates `Cmd+C`, reads the copied text from the pasteboard, and speaks it aloud.
+When the hotkey is pressed, AuralAI simulates `Cmd+C`, reads the copied text from the pasteboard, and speaks it aloud.
 
 The app requires Accessibility permission on macOS so it can:
 
@@ -57,12 +57,12 @@ Speech history is stored in Core Data.
 
 ## Project Structure
 
-- `SpeakIt/`: app source
-- `SpeakIt/Models/`: settings and model types
-- `SpeakIt/Services/`: hotkey, clipboard, and TTS services
-- `SpeakIt/Views/`: SwiftUI views
-- `SpeakItTests/`: unit tests
-- `SpeakItUITests/`: UI tests
+- `AuralAI/`: app source
+- `AuralAI/Models/`: settings and model types
+- `AuralAI/Services/`: hotkey, clipboard, and TTS services
+- `AuralAI/Views/`: SwiftUI views
+- `AuralAITests/`: unit tests
+- `AuralAIUITests/`: UI tests
 
 ## Requirements
 
@@ -72,7 +72,7 @@ Speech history is stored in Core Data.
 
 ## Build
 
-Open `SpeakIt.xcodeproj` in Xcode and run the `SpeakIt` scheme.
+Open `AuralAI.xcodeproj` in Xcode and run the `AuralAI` scheme.
 
 If Xcode reports a signing error, update the team and signing certificate in the project settings before building.
 
@@ -84,8 +84,8 @@ To build a distributable macOS app bundle and package it into a DMG:
 bash Scripts/package_dmg.sh --clean
 ```
 
-By default the script uses `xcodebuild archive`, copies the archived `SpeakIt.app` into `dist/`, and creates `dist/SpeakIt.dmg`.
-The generated DMG includes a standard drag-to-install layout with `SpeakIt.app` and an `Applications` shortcut.
+By default the script uses `xcodebuild archive`, copies the archived `AuralAI.app` into `dist/`, and creates `dist/AuralAI.dmg`.
+The generated DMG includes a standard drag-to-install layout with `AuralAI.app` and an `Applications` shortcut.
 
 Useful variants:
 

@@ -12,37 +12,37 @@
 			containerPortal = 0443CFC12F6EBE3B008CBC8B /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 0443CFC82F6EBE3B008CBC8B;
-			remoteInfo = SpeakIt;
+			remoteInfo = AuralAI;
 		};
 		0443CFE72F6EBE3D008CBC8B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0443CFC12F6EBE3B008CBC8B /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 0443CFC82F6EBE3B008CBC8B;
-			remoteInfo = SpeakIt;
+			remoteInfo = AuralAI;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0443CFC92F6EBE3B008CBC8B /* SpeakIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeakIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0443CFDC2F6EBE3D008CBC8B /* SpeakItTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeakItTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0443CFE62F6EBE3D008CBC8B /* SpeakItUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeakItUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0443CFC92F6EBE3B008CBC8B /* AuralAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuralAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0443CFDC2F6EBE3D008CBC8B /* AuralAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuralAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0443CFE62F6EBE3D008CBC8B /* AuralAIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuralAIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0443CFCB2F6EBE3B008CBC8B /* SpeakIt */ = {
+		0443CFCB2F6EBE3B008CBC8B /* AuralAI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SpeakIt;
+			path = AuralAI;
 			sourceTree = "<group>";
 		};
-		0443CFDF2F6EBE3D008CBC8B /* SpeakItTests */ = {
+		0443CFDF2F6EBE3D008CBC8B /* AuralAITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SpeakItTests;
+			path = AuralAITests;
 			sourceTree = "<group>";
 		};
-		0443CFE92F6EBE3D008CBC8B /* SpeakItUITests */ = {
+		0443CFE92F6EBE3D008CBC8B /* AuralAIUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SpeakItUITests;
+			path = AuralAIUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,9 +75,9 @@
 		0443CFC02F6EBE3B008CBC8B = {
 			isa = PBXGroup;
 			children = (
-				0443CFCB2F6EBE3B008CBC8B /* SpeakIt */,
-				0443CFDF2F6EBE3D008CBC8B /* SpeakItTests */,
-				0443CFE92F6EBE3D008CBC8B /* SpeakItUITests */,
+				0443CFCB2F6EBE3B008CBC8B /* AuralAI */,
+				0443CFDF2F6EBE3D008CBC8B /* AuralAITests */,
+				0443CFE92F6EBE3D008CBC8B /* AuralAIUITests */,
 				0443CFCA2F6EBE3B008CBC8B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,9 +85,9 @@
 		0443CFCA2F6EBE3B008CBC8B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0443CFC92F6EBE3B008CBC8B /* SpeakIt.app */,
-				0443CFDC2F6EBE3D008CBC8B /* SpeakItTests.xctest */,
-				0443CFE62F6EBE3D008CBC8B /* SpeakItUITests.xctest */,
+				0443CFC92F6EBE3B008CBC8B /* AuralAI.app */,
+				0443CFDC2F6EBE3D008CBC8B /* AuralAITests.xctest */,
+				0443CFE62F6EBE3D008CBC8B /* AuralAIUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0443CFC82F6EBE3B008CBC8B /* SpeakIt */ = {
+		0443CFC82F6EBE3B008CBC8B /* AuralAI */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0443CFF02F6EBE3D008CBC8B /* Build configuration list for PBXNativeTarget "SpeakIt" */;
+			buildConfigurationList = 0443CFF02F6EBE3D008CBC8B /* Build configuration list for PBXNativeTarget "AuralAI" */;
 			buildPhases = (
 				0443CFC52F6EBE3B008CBC8B /* Sources */,
 				0443CFC62F6EBE3B008CBC8B /* Frameworks */,
@@ -108,18 +108,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				0443CFCB2F6EBE3B008CBC8B /* SpeakIt */,
+				0443CFCB2F6EBE3B008CBC8B /* AuralAI */,
 			);
-			name = SpeakIt;
+			name = AuralAI;
 			packageProductDependencies = (
 			);
-			productName = SpeakIt;
-			productReference = 0443CFC92F6EBE3B008CBC8B /* SpeakIt.app */;
+			productName = AuralAI;
+			productReference = 0443CFC92F6EBE3B008CBC8B /* AuralAI.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0443CFDB2F6EBE3D008CBC8B /* SpeakItTests */ = {
+		0443CFDB2F6EBE3D008CBC8B /* AuralAITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0443CFF32F6EBE3D008CBC8B /* Build configuration list for PBXNativeTarget "SpeakItTests" */;
+			buildConfigurationList = 0443CFF32F6EBE3D008CBC8B /* Build configuration list for PBXNativeTarget "AuralAITests" */;
 			buildPhases = (
 				0443CFD82F6EBE3D008CBC8B /* Sources */,
 				0443CFD92F6EBE3D008CBC8B /* Frameworks */,
@@ -131,18 +131,18 @@
 				0443CFDE2F6EBE3D008CBC8B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0443CFDF2F6EBE3D008CBC8B /* SpeakItTests */,
+				0443CFDF2F6EBE3D008CBC8B /* AuralAITests */,
 			);
-			name = SpeakItTests;
+			name = AuralAITests;
 			packageProductDependencies = (
 			);
-			productName = SpeakItTests;
-			productReference = 0443CFDC2F6EBE3D008CBC8B /* SpeakItTests.xctest */;
+			productName = AuralAITests;
+			productReference = 0443CFDC2F6EBE3D008CBC8B /* AuralAITests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		0443CFE52F6EBE3D008CBC8B /* SpeakItUITests */ = {
+		0443CFE52F6EBE3D008CBC8B /* AuralAIUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0443CFF62F6EBE3D008CBC8B /* Build configuration list for PBXNativeTarget "SpeakItUITests" */;
+			buildConfigurationList = 0443CFF62F6EBE3D008CBC8B /* Build configuration list for PBXNativeTarget "AuralAIUITests" */;
 			buildPhases = (
 				0443CFE22F6EBE3D008CBC8B /* Sources */,
 				0443CFE32F6EBE3D008CBC8B /* Frameworks */,
@@ -154,13 +154,13 @@
 				0443CFE82F6EBE3D008CBC8B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0443CFE92F6EBE3D008CBC8B /* SpeakItUITests */,
+				0443CFE92F6EBE3D008CBC8B /* AuralAIUITests */,
 			);
-			name = SpeakItUITests;
+			name = AuralAIUITests;
 			packageProductDependencies = (
 			);
-			productName = SpeakItUITests;
-			productReference = 0443CFE62F6EBE3D008CBC8B /* SpeakItUITests.xctest */;
+			productName = AuralAIUITests;
+			productReference = 0443CFE62F6EBE3D008CBC8B /* AuralAIUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +186,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0443CFC42F6EBE3B008CBC8B /* Build configuration list for PBXProject "SpeakIt" */;
+			buildConfigurationList = 0443CFC42F6EBE3B008CBC8B /* Build configuration list for PBXProject "AuralAI" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -200,9 +200,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0443CFC82F6EBE3B008CBC8B /* SpeakIt */,
-				0443CFDB2F6EBE3D008CBC8B /* SpeakItTests */,
-				0443CFE52F6EBE3D008CBC8B /* SpeakItUITests */,
+				0443CFC82F6EBE3B008CBC8B /* AuralAI */,
+				0443CFDB2F6EBE3D008CBC8B /* AuralAITests */,
+				0443CFE52F6EBE3D008CBC8B /* AuralAIUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -258,12 +258,12 @@
 /* Begin PBXTargetDependency section */
 		0443CFDE2F6EBE3D008CBC8B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0443CFC82F6EBE3B008CBC8B /* SpeakIt */;
+			target = 0443CFC82F6EBE3B008CBC8B /* AuralAI */;
 			targetProxy = 0443CFDD2F6EBE3D008CBC8B /* PBXContainerItemProxy */;
 		};
 		0443CFE82F6EBE3D008CBC8B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0443CFC82F6EBE3B008CBC8B /* SpeakIt */;
+			target = 0443CFC82F6EBE3B008CBC8B /* AuralAI */;
 			targetProxy = 0443CFE72F6EBE3D008CBC8B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -394,7 +394,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = SpeakIt/SpeakIt.entitlements;
+				CODE_SIGN_ENTITLEMENTS = AuralAI/AuralAI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -402,15 +402,17 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "AuralAI Dev";
+				INFOPLIST_KEY_CFBundleName = "AuralAI Dev";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.xiaolei.SpeakIt.dev;
-				PRODUCT_MODULE_NAME = SpeakIt;
-				PRODUCT_NAME = "$(TARGET_NAME) Dev";
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiaolei.AuralAI.dev;
+				PRODUCT_MODULE_NAME = AuralAI;
+				PRODUCT_NAME = "AuralAI Dev";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -422,7 +424,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = SpeakIt/SpeakIt.entitlements;
+				CODE_SIGN_ENTITLEMENTS = AuralAI/AuralAI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -430,14 +432,17 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = AuralAI;
+				INFOPLIST_KEY_CFBundleName = AuralAI;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.xiaolei.SpeakIt;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiaolei.AuralAI;
+				PRODUCT_MODULE_NAME = AuralAI;
+				PRODUCT_NAME = AuralAI;
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -454,11 +459,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.xiaolei.SpeakItTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiaolei.AuralAITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpeakIt.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SpeakIt";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AuralAI Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AuralAI Dev";
 			};
 			name = Debug;
 		};
@@ -472,11 +477,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.xiaolei.SpeakItTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiaolei.AuralAITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpeakIt.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SpeakIt";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AuralAI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AuralAI";
 			};
 			name = Release;
 		};
@@ -488,11 +493,11 @@
 				DEVELOPMENT_TEAM = Q83FXUCHNL;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.xiaolei.SpeakItUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiaolei.AuralAIUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = SpeakIt;
+				TEST_TARGET_NAME = AuralAI;
 			};
 			name = Debug;
 		};
@@ -504,18 +509,18 @@
 				DEVELOPMENT_TEAM = Q83FXUCHNL;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.xiaolei.SpeakItUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiaolei.AuralAIUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = SpeakIt;
+				TEST_TARGET_NAME = AuralAI;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0443CFC42F6EBE3B008CBC8B /* Build configuration list for PBXProject "SpeakIt" */ = {
+		0443CFC42F6EBE3B008CBC8B /* Build configuration list for PBXProject "AuralAI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0443CFEE2F6EBE3D008CBC8B /* Debug */,
@@ -524,7 +529,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0443CFF02F6EBE3D008CBC8B /* Build configuration list for PBXNativeTarget "SpeakIt" */ = {
+		0443CFF02F6EBE3D008CBC8B /* Build configuration list for PBXNativeTarget "AuralAI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0443CFF12F6EBE3D008CBC8B /* Debug */,
@@ -533,7 +538,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0443CFF32F6EBE3D008CBC8B /* Build configuration list for PBXNativeTarget "SpeakItTests" */ = {
+		0443CFF32F6EBE3D008CBC8B /* Build configuration list for PBXNativeTarget "AuralAITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0443CFF42F6EBE3D008CBC8B /* Debug */,
@@ -542,7 +547,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0443CFF62F6EBE3D008CBC8B /* Build configuration list for PBXNativeTarget "SpeakItUITests" */ = {
+		0443CFF62F6EBE3D008CBC8B /* Build configuration list for PBXNativeTarget "AuralAIUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0443CFF72F6EBE3D008CBC8B /* Debug */,

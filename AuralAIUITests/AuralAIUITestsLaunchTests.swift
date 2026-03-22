@@ -1,13 +1,13 @@
 //
-//  SpeakItUITestsLaunchTests.swift
-//  SpeakItUITests
+//  AuralAIUITestsLaunchTests.swift
+//  AuralAIUITests
 //
 //  Created by mac on 2026/3/21.
 //
 
 import XCTest
 
-final class SpeakItUITestsLaunchTests: XCTestCase {
+final class AuralAIUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

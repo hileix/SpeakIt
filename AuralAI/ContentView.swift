@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  SpeakIt
+//  AuralAI
 //
 //  Created by mac on 2026/3/21.
 //  NOTE: This file is deprecated - MainView.swift is now used instead

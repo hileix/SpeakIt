@@ -1,8 +1,8 @@
 //
 //  MainView.swift
-//  SpeakIt
+//  AuralAI
 //
-//  Created by SpeakIt Migration
+//  Created by AuralAI Migration
 //
 
 import SwiftUI
@@ -36,7 +36,7 @@ struct MainView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("SpeakIt")
+                        Text("AuralAI")
                             .font(.largeTitle)
                             .fontWeight(.bold)
 
