@@ -39,8 +39,6 @@ class SpeechSettings: ObservableObject {
         static let `default`: HotkeyModifier = [.control]
     }
 
-    // App Group identifier for sharing between app and extension
-    private static let appGroupIdentifier = "group.com.yourteam.speakit"
     private let defaults: UserDefaults
 
     // Keys for UserDefaults
@@ -105,14 +103,8 @@ class SpeechSettings: ObservableObject {
     // MARK: - Initialization
 
     private init() {
-        // Use App Group defaults for sharing with Share Extension
-        if let appGroupDefaults = UserDefaults(suiteName: SpeechSettings.appGroupIdentifier) {
-            self.defaults = appGroupDefaults
-        } else {
-            // Fallback to standard defaults
-            self.defaults = UserDefaults.standard
-            print("Warning: Could not initialize App Group defaults. Using standard UserDefaults.")
-        }
+        self.defaults = UserDefaults.standard
+        Self.migrateLegacyDefaultsIfNeeded(using: defaults)
 
         // Load saved settings or use defaults
         self.voiceIdentifier = defaults.string(forKey: Keys.voiceIdentifier)
@@ -123,6 +115,33 @@ class SpeechSettings: ObservableObject {
 
         let storedModifiers = defaults.object(forKey: Keys.hotkeyModifiers) as? Int
         self.hotkeyModifiersRawValue = storedModifiers ?? HotkeyModifier.default.rawValue
+    }
+
+    /// Migrate settings from the old shared suite into the app-scoped defaults once.
+    /// This keeps existing users' settings while allowing Debug/Release builds to diverge.
+    private static func migrateLegacyDefaultsIfNeeded(using defaults: UserDefaults) {
+        let legacySuiteIdentifier = "group.com.yourteam.speakit"
+        let migrationFlagKey = "didMigrateFromLegacyAppGroupDefaults"
+
+        guard !defaults.bool(forKey: migrationFlagKey) else { return }
+        guard let legacyDefaults = UserDefaults(suiteName: legacySuiteIdentifier) else { return }
+
+        let keys = [
+            Keys.voiceIdentifier,
+            Keys.rate,
+            Keys.pitch,
+            Keys.language,
+            Keys.hotkeyKey,
+            Keys.hotkeyModifiers
+        ]
+
+        for key in keys where defaults.object(forKey: key) == nil {
+            if let value = legacyDefaults.object(forKey: key) {
+                defaults.set(value, forKey: key)
+            }
+        }
+
+        defaults.set(true, forKey: migrationFlagKey)
     }
 
     // MARK: - Helper Methods

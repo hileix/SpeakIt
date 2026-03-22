@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import Foundation
 
 struct PersistenceController {
     static let shared = PersistenceController()
@@ -36,8 +37,14 @@ struct PersistenceController {
 
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "SpeakIt")
+        guard let description = container.persistentStoreDescriptions.first else {
+            fatalError("Missing persistent store description")
+        }
+
         if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+            description.url = URL(fileURLWithPath: "/dev/null")
+        } else {
+            description.url = Self.defaultStoreURL()
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -95,5 +102,24 @@ struct PersistenceController {
         } catch {
             print("Error deleting speech history: \(error)")
         }
+    }
+
+    private static func defaultStoreURL() -> URL {
+        let fileManager = FileManager.default
+        let bundleIdentifier = Bundle.main.bundleIdentifier ?? "com.xiaolei.SpeakIt"
+
+        guard let appSupportURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+            fatalError("Could not resolve Application Support directory")
+        }
+
+        let directoryURL = appSupportURL.appendingPathComponent(bundleIdentifier, isDirectory: true)
+
+        do {
+            try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+        } catch {
+            fatalError("Could not create persistent store directory: \(error)")
+        }
+
+        return directoryURL.appendingPathComponent("SpeakIt.sqlite")
     }
 }
